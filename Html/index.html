@@ -1,19 +1,279 @@
-!<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Title</title>
+
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lafeber/world-flags-sprite/stylesheets/flags32-both.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/scroller/2.2.0/css/scroller.dataTables.min.css"
+    />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/scroller.dataTables.js"></script>
+
+    <style>
+      :root {
+        /* Paleta de cores */
+        --cor-primaria: #fafafa;
+        --cor-secundaria: #07637a;
+        --cor-terciaria: #ffffff;
+        --cor-quaternaria: #e5e5e5;
+        --cor-acento: #ff5733; /* Exemplo de cor de acento */
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        font-family: "Raleway", sans-serif;
+        font-size: 1.2em;
+      }
+
+      #superBody {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        background: var(--cor-quaternaria);
+        height: 100%;
+        width: 100%;
+      }
+      #barTop {
+        grid-column: 1 / -1; /* Ocupa toda a largura do grid */
+        background: var(--cor-terciaria);
+        color: #070606;
+        padding: 1em;
+        text-align: center;
+      }
+      #ladoEsquerdo {
+        grid-row: 2 / 3; /* Fica na segunda linha */
+        height: 100vh;
+        background: var(--cor-primaria);
+        width: 300px;
+        max-width: 300px; /* Largura fixa para a barra lateral esquerda */
+      }
+
+      #ladoDireito {
+        height: 100vh;
+        max-width: 100vw;
+        margin-left: 0.8vh;
+        background: var(--cor-quaternaria);
+        padding: 1em;
+      }
+
+      button {
+        border: none;
+      }
+
+      .ui-accordion .ui-accordion-content {
+        display: grid;
+      }
+
+      /* Overlay que cobre toda a tela */
+      .spinner-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        /* Cor de fundo com transparência */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        /* Certifique-se de que o overlay esteja acima de outros conteúdos */
+      }
+
+      /* Classe para mostrar/ocultar o overlay */
+      .d-none {
+        display: none;
+      }
+
+      @media (max-width: 600px) {
+        #ladoDireito {
+          height: 100vh;
+          max-width: 100vw;
+        }
+
+        #ladoEsquerdo {
+          height: 50vh;
+          width: 100vw;
+        }
+
+        #superBody {
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 9fr;
+          height: 100vh;
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="SuperBody">
-      <div class="ladoEsquerdo"></div>
-      <div class="ladoDireito"></div>
+    <div id="superBody">
+      <div class="container-fluid" id="barTop">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Inicio</a>
+            <a class="navbar-brand" href="#">Documentos</a>
+            <a class="navbar-brand" href="#">Portal</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+              <form class="d-flex" role="search">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div id="ladoEsquerdo">
+        <div id="accordion">
+          <h3>Section 1</h3>
+          <div>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+          </div>
+          <h3>Section 2</h3>
+          <div>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+          </div>
+          <h3>Section 3</h3>
+          <div>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+          </div>
+          <h3>Section 4</h3>
+          <div>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+            <p>
+              <button type="button" class="btn btn-primary">Primary</button>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="ladoDireito"></div>
     </div>
 
-    <script src="" async defer></script>
+    <!-- Spinner Overlay -->
+    <div id="spinner-overlay" class="spinner-overlay d-none">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <script>
+      // Função para mostrar o spinner
+      function mostrarSpinner() {
+        document.getElementById("spinner-overlay").classList.remove("d-none");
+      }
+
+      // Função para esconder o spinner
+      function esconderSpinner() {
+        document.getElementById("spinner-overlay").classList.add("d-none");
+      }
+
+      $(document).ready(function () {
+        $("#accordion").accordion({
+          active: false,
+          collapsible: true,
+          heightStyle: "content",
+          icons: { header: "ui-icon-plus", activeHeader: "ui-icon-minus" },
+        });
+      });
+
+      const inserirTemplate = (templateId) => {
+        const formularioID = document.getElementById(templateId);
+        const paginanova = document.getElementById("ladoDireito");
+        paginanova.innerHTML = "";
+        const clone = document.importNode(formularioID.content, true);
+        paginanova.appendChild(clone);
+        return formularioID;
+      };
+
+      function chamaTemplate(templateId) {
+        const formularioID = document.getElementById(templateId);
+        if (formularioID) {
+          inserirTemplate(templateId);
+        }
+      }
+    </script>
   </body>
 </html>
